@@ -1,0 +1,11 @@
+numpy
+scipy
+matplotlib
+pandas
+opencv-python
+
+[dev]
+pytest
+black
+flake8
+mypy

@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: mylib
+Version: 0.1.0
+Summary: A collection of computer vision and geometry utilities
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: pandas
+Requires-Dist: opencv-python
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: black; extra == "dev"
+Requires-Dist: flake8; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+
+# MyLib
+
+A collection of computer vision and geometry utilities.
+
+## Installation
+
+```bash
+pip install -e .
+```
+
+## Usage
+
+```python
+import mylib
+from mylib import geometry, conversions
+from mylib.colmap_utils import run_colmap
+```
