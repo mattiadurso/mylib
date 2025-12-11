@@ -3,26 +3,23 @@ from __future__ import annotations
 import os
 import sys
 
-sys.path.append(
-    os.path.expanduser("~") + "/Desktop/Repos/colmap"
-)  # path to COLMAP repository
-from scripts.python.read_write_model import read_model, write_model, qvec2rotmat
+import os
+import sys
 
+COLMAP_PATH = os.environ.get(
+    "COLMAP_PATH", os.path.expanduser("~/Desktop/Repos/colmap")
+)
+sys.path.append(COLMAP_PATH)
+from scripts.python.read_write_model import read_model, write_model, qvec2rotmat
 import time
 import pandas as pd
 import numpy as np
-import torch
-import cv2
-import glob
-import kornia
 from joblib import Parallel, delayed
-import matplotlib.pyplot as plt
 
 from tqdm.auto import tqdm
 from pathlib import Path
-from pprint import pprint
 from itertools import combinations
-from ..metrics import *
+from ..metrics import evaluate_R_t, compute_AUC_pxsfm
 
 
 #  -----------------------------

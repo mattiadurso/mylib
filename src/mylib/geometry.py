@@ -1,7 +1,6 @@
 # direct importes
 import torch
 import kornia
-import cv2
 import numpy as np
 import poselib
 from .conversions import *  # Changed from 'mylib.src.conversions import *'

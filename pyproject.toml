@@ -10,11 +10,14 @@ readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
     "numpy",
-    "scipy",
     "matplotlib",
-    "pandas",
     "opencv-python",
     "kornia",  # Added for vision geometry ops
+    "tqdm",
+    "torch",
+    "pandas",
+    "Pillow",  # Added for image handling
+    "poselib"
     # Add other dependencies your code needs
 ]
 

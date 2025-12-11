@@ -3,8 +3,6 @@ from __future__ import annotations
 
 # direct importes
 import torch
-import kornia
-import cv2
 
 # imports as alias
 import numpy as np
@@ -87,7 +85,7 @@ def project_points_2D_to_2D(
     Rt1 = to_torch(Rt1)
     K0 = to_torch(K0)
     K1 = to_torch(K1)
-    p0 = to_homogeneous(points).view(-1, 3, 1).to(device)
+    p0 = to_homogeneous(points[0]).view(-1, 3, 1).to(device)
 
     # filter out points out of depth shape
     mask = filter_points_outside_image(p0, Z0.shape)

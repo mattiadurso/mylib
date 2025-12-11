@@ -1,7 +1,6 @@
 # direct importes
 import torch
 import kornia
-import cv2
 import numpy as np
 from .conversions import *
 from .projections import *
