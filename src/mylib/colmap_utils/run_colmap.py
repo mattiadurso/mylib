@@ -127,9 +127,9 @@ def run_colmap(
 
         write_time(database_path, "Feature extraction", time.time() - stime_feat)
 
+    stime_match = time.time()
     if matcher in ["sequential", "seq", "s"] and feature_matching:
         # sequential matcher
-        stime_match = time.time()
         os.system(
             f"colmap sequential_matcher \
                     --database_path {database_path}/database.db \
@@ -143,14 +143,24 @@ def run_colmap(
                     --SequentialMatching.loop_detection_max_num_features 5000 \
             "
         )
-    else:
+    elif matcher in ["exhaustive", "exaustive", "e"] and feature_matching:
         # exausting matcher
-        stime_match = time.time()
         os.system(
             f"colmap exhaustive_matcher \
                     --database_path {database_path}/database.db"
         )
-        write_time(database_path, "Feature matching", time.time() - stime_match)
+    elif matcher in ["gps", "spatial"] and feature_matching:
+        # GPS matcher
+        os.system(
+            f"colmap spatial_matcher \
+                --database_path data_gps/udine_university/colmap/database.db \
+                --SpatialMatching.max_distance 100 \
+                "
+        )
+    else:
+        print(">>> Skipping feature matching step. <<<")
+        pass
+    write_time(database_path, "Feature matching", time.time() - stime_match)
 
     if sparse_reconstruction is True:
         # Mapping | COLMAP or GLOMAP |
