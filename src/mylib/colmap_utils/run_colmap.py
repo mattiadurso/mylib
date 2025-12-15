@@ -155,7 +155,7 @@ def run_colmap(
             f"colmap spatial_matcher \
                 --database_path {database_path}/database.db \
                 --SpatialMatching.max_distance 100 \
-            "
+            "  # 100 meters
         )
     else:
         print(">>> Skipping feature matching step. <<<")
