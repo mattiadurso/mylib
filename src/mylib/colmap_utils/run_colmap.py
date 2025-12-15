@@ -153,9 +153,9 @@ def run_colmap(
         # GPS matcher
         os.system(
             f"colmap spatial_matcher \
-                --database_path data_gps/udine_university/colmap/database.db \
+                --database_path {database_path}/database.db \
                 --SpatialMatching.max_distance 100 \
-                "
+            "
         )
     else:
         print(">>> Skipping feature matching step. <<<")
