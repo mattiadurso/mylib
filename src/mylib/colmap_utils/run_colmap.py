@@ -132,16 +132,16 @@ def run_colmap(
         # sequential matcher
         os.system(
             f"colmap sequential_matcher \
-                    --database_path {database_path}/database.db \
-                    --SequentialMatching.overlap 15 \
-                    --SequentialMatching.quadratic_overlap 1 \
-                    --SequentialMatching.loop_detection 1 \
-                    --SequentialMatching.loop_detection_period 10 \
-                    --SequentialMatching.loop_detection_num_images 200 \
-                    --SequentialMatching.loop_detection_num_nearest_neighbors 5 \
-                    --SequentialMatching.loop_detection_num_checks 512 \
-                    --SequentialMatching.loop_detection_max_num_features 5000 \
+                --database_path {database_path}/database.db \
+                --SequentialMatching.overlap 10 \
+                --SequentialMatching.loop_detection 1 \
             "
+            #         --SequentialMatching.loop_detection_period 10 \
+            #         --SequentialMatching.loop_detection_num_images 200 \
+            #         --SequentialMatching.loop_detection_num_nearest_neighbors 5 \
+            #         --SequentialMatching.loop_detection_num_checks 512 \
+            #         --SequentialMatching.loop_detection_max_num_features 5000 \
+            # "
         )
     elif matcher in ["exhaustive", "exaustive", "e"] and feature_matching:
         # exausting matcher
@@ -154,8 +154,9 @@ def run_colmap(
         os.system(
             f"colmap spatial_matcher \
                 --database_path {database_path}/database.db \
-                --SpatialMatching.max_distance 100 \
-            "  # 100 meters
+                --SpatialMatching.max_distance 50 \
+                --SpatialMatching.max_num_neighbors 100 \
+            "  # 50 meters
         )
     else:
         print(">>> Skipping feature matching step. <<<")
@@ -169,10 +170,10 @@ def run_colmap(
             if intrisics_path is None:
                 os.system(
                     f"glomap mapper \
-                            --database_path {database_path}/database.db \
-                            --image_path {images_path}  \
-                            --output_path {output_path}/sparse/ \
-                            "
+                        --database_path {database_path}/database.db \
+                        --image_path {images_path}  \
+                        --output_path {output_path}/sparse/ \
+                    "
                 )
             else:  # with given GT intrisics do not refine them
                 os.system(

@@ -47,45 +47,6 @@ def plot_from_dataset(imgs, ids, title=None, save_path=None):
     plt.show()
 
 
-def plot_imgs_and_kpts_old(
-    img1, img2, kpt1, kpt2, space=50, matches=True, index=False, sample_points=32
-):
-    # """
-    # Plot two images side by side with keypoints overlayed and matches if specified.
-    # """
-    # #assert (img1-img2).sum() != 0, "Images must be different"
-    # #assert not torch.allclose(kpt1,kpt2), "Keypoints must be different"
-
-    # white = torch.ones((img1.shape[0], space, 3)).int()*255
-    # concat = torch.cat((img1, white, img2), dim=1).int()
-
-    # plt.figure(figsize=(15, 8))
-    # plt.imshow(concat)
-
-    # sample_points = min(sample_points, len(kpt1))
-    # if sample_points and sample_points < len(kpt1):
-    #     kpt1 = kpt1[::len(kpt1)//sample_points]
-    #     kpt2 = kpt2[::len(kpt2)//sample_points]
-
-    # if index:
-    #     for i,(x,y) in enumerate(kpt1):
-    #         plt.text(x, y, c="w", s=str(i), fontsize=8, ha='center', va='center')
-    #     for i,(x,y) in enumerate(kpt2):
-    #         plt.text(x + img1.shape[1] + space, y, c="w", s=str(i), fontsize=8,ha='center', va='center')
-
-    # plt.scatter(kpt1[:, 0],                         kpt1[:, 1], c="r", s=13)
-    # plt.scatter(kpt2[:, 0] + img1.shape[1] + space, kpt2[:, 1], c="r", s=13)
-
-    # if matches:
-    #     for i in range(kpt1.shape[0]):
-    #         plt.plot([kpt1[i, 0], kpt2[i, 0] + img1.shape[1] + space], [kpt1[i, 1], kpt2[i, 1]], c="g", linewidth=1, alpha=0.5)
-
-    # plt.title("Image 1                 Image 2")
-    # plt.xlim([0, img1.shape[1] + img2.shape[1] + space])
-    # plt.ylim([img1.shape[0], 0])
-    print("plot_imgs_and_kpts_old is deprecated, use plot_imgs_and_kpts instead.")
-
-
 def plot_imgs_and_kpts(
     img1,
     img2,
@@ -95,7 +56,9 @@ def plot_imgs_and_kpts(
     matches=True,
     index=False,
     sample_points=32,
+    point_size=5,
     pad_color=(255, 255, 255),
+    title=None,
 ):
     """
     Plot two images side by side with keypoints overlaid and matches if specified.
@@ -181,8 +144,10 @@ def plot_imgs_and_kpts(
                 va="center",
             )
 
-    plt.scatter(kpt1_adj[:, 0].cpu(), kpt1_adj[:, 1].cpu(), c="r", s=13)
-    plt.scatter(kpt2_adj[:, 0].cpu() + x_offset, kpt2_adj[:, 1].cpu(), c="r", s=13)
+    plt.scatter(kpt1_adj[:, 0].cpu(), kpt1_adj[:, 1].cpu(), c="r", s=point_size)
+    plt.scatter(
+        kpt2_adj[:, 0].cpu() + x_offset, kpt2_adj[:, 1].cpu(), c="r", s=point_size
+    )
 
     if matches:
         for i in range(kpt1_adj.shape[0]):
@@ -200,6 +165,8 @@ def plot_imgs_and_kpts(
     plt.xlim([0, w1 + w2 + space])
     plt.ylim([target_h, 0])
     plt.axis("off")
+    if title:
+        plt.title(title)
     plt.tight_layout()
     plt.show()
 

@@ -119,7 +119,7 @@ def unproject_to_virtual_plane(
             B,n,3
     """
     xy_hom = to_homogeneous(xy)  # B,n,3
-    if cast_to_double:
+    if False:  # cast_to_double:
         original_type = xy.dtype
         # Bx3x3 * Bx3xn = Bx3xn  -> B,n,3 after permute
         xyz = (
@@ -206,12 +206,10 @@ def change_reference_3D_points(
     ), f"Expected P1 to have shape Bx4x4, got {P1.shape}"
 
     xyz0_hom = to_homogeneous(xyz0)  # B,n,4
-    if cast_to_double:
+    if False:  # cast_to_double:
         original_dtype = xyz0.dtype
-        P0_inv = invert_P(P0.to(th.double))
-        xyz1_hom = (
-            P1.to(th.double) @ P0_inv @ xyz0_hom.permute(0, 2, 1).to(th.double)
-        )  # B,4,n
+        P0_inv = invert_P(P0.float())
+        xyz1_hom = P1.float() @ P0_inv @ xyz0_hom.permute(0, 2, 1).float()  # B,4,n
         xyz1 = from_homogeneous(xyz1_hom.permute(0, 2, 1)).to(original_dtype)  # B,n,3
     else:
         P0_inv = invert_P(P0)
@@ -275,9 +273,7 @@ def project_to_2D(
     """
     original_dtype = xyz.dtype
     # B,3,3 * B,3,n =  B,3,n  -> B,n,3 after permutation
-    xy_proj_hom = (K.to(th.double) @ xyz.permute(0, 2, 1).to(th.double)).permute(
-        0, 2, 1
-    )
+    xy_proj_hom = (K.float() @ xyz.permute(0, 2, 1).float()).permute(0, 2, 1)
     xy_proj = from_homogeneous(xy_proj_hom).to(original_dtype)  # B,n,2
 
     if img_shape is not None:

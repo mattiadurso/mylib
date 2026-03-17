@@ -150,8 +150,8 @@ def compute_essential_poselib(
     if camera_dict2 is None:
         camera_dict2 = camera_dict1
 
-    points1 = to_torch(points1, b=False).double().reshape(-1, 2, 1).numpy()
-    points2 = to_torch(points2, b=False).double().reshape(-1, 2, 1).numpy()
+    points1 = to_torch(points1, b=False).double().reshape(-1, 2).numpy()  # (N, 2)
+    points2 = to_torch(points2, b=False).double().reshape(-1, 2).numpy()  # (N, 2)
 
     pose, dict_pose = poselib.estimate_relative_pose(
         points2D_1=list(points1),

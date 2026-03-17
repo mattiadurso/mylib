@@ -6,12 +6,18 @@ import sys
 import os
 import sys
 
+# ...existing code...
 COLMAP_PATH = os.environ.get(
     "COLMAP_PATH", os.path.expanduser("~/Desktop/Repos/colmap")
 )
-sys.path.append(COLMAP_PATH)
-from scripts.python.read_write_model import read_model, write_model, qvec2rotmat
+# Append the specific python scripts directory
+sys.path.append(os.path.join(COLMAP_PATH, "scripts", "python"))
+
+# Import directly from the module name
+from read_write_model import read_model, write_model, qvec2rotmat
 import time
+
+#
 import pandas as pd
 import numpy as np
 from joblib import Parallel, delayed
