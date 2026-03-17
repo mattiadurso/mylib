@@ -1,8 +1,12 @@
 numpy
-scipy
 matplotlib
-pandas
 opencv-python
+kornia
+tqdm
+torch
+pandas
+Pillow
+poselib
 
 [dev]
 pytest
